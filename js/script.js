@@ -8,7 +8,6 @@ async function userProfile(userName) {
 	try {
 		let rep = await fetch(`https://api.github.com/users/${userName}`);
 		let data = await rep.json();
-		console.log(data);
 		if (data.message != 'Not Found') {
 			sectioInfoProfile.style.display = 'block';
 			aviso.classList.remove('active');
@@ -49,8 +48,7 @@ async function userProfile(userName) {
 				.querySelector('.socias .socias-icons #blog')
 				.setAttribute('href', object.blog);
 
-			sectioInfoProfile.querySelector('.socias .socias-icons #blog').innerHTML = `${object.blog}`;
-
+			sectioInfoProfile.querySelector('.socias .socias-icons #blog').innerHTML = object.blog;
 			sectioInfoProfile
 				.querySelector('.socias .socias-icons #company')
 				.setAttribute('href', object.company);
@@ -86,9 +84,9 @@ window.addEventListener('load', () => {
 	document.querySelector('html').classList.add(theme);
 });
 
-input.addEventListener('keyup', e => {
+input.addEventListener('keyup', event => {
 	if (input.value != '') {
-		if (e.key == 'Enter') {
+		if (event.key == 'Enter') {
 			userProfile(input.value);
 		}
 	} else {
@@ -98,10 +96,9 @@ input.addEventListener('keyup', e => {
 buttonInput.addEventListener('click', () => {
 	if (input.value != '') {
 		userProfile(input.value);
-	} else {
-		sectioInfoProfile.style.display = 'none';
 	}
 });
+
 modeTheme.addEventListener('click', e => {
 	document.querySelector('html').classList.toggle('dark');
 	if (document.querySelector('html').classList.contains('dark')) {
