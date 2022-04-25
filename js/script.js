@@ -25,9 +25,10 @@ async function userProfile(userName) {
 				repPublic: data.public_repos,
 				location: data.location,
 				blog: data.blog,
-				twitter: data.twitter_usernam,
+				twitter: data.twitter_username,
 				company: data.company,
 			};
+
 			// maker card info
 			sectioInfoProfile.querySelector('.img-avatar img').src = object.avatar;
 			sectioInfoProfile.querySelector('.name-data .name-at h3').innerHTML = object.name;
@@ -47,9 +48,21 @@ async function userProfile(userName) {
 			sectioInfoProfile
 				.querySelector('.socias .socias-icons #blog')
 				.setAttribute('href', object.blog);
+
+			sectioInfoProfile.querySelector('.socias .socias-icons #blog').innerHTML = `${object.blog}`;
+
+			sectioInfoProfile
+				.querySelector('.socias .socias-icons #company')
+				.setAttribute('href', object.company);
+			sectioInfoProfile.querySelector(
+				'.socias .socias-icons #company'
+			).innerHTML = `${object.company}`;
 			sectioInfoProfile
 				.querySelector('.socias .socias-icons #twitter')
-				.setAttribute(`https://twitter.com/${object.twitter}`);
+				.setAttribute('href', `https://twitter.com/${object.twitter}`);
+			sectioInfoProfile.querySelector(
+				'.socias .socias-icons #twitter'
+			).innerHTML = `@${object.twitter}`;
 		} else {
 			sectioInfoProfile.style.display = 'none';
 			aviso.innerHTML = `Not found ${userName}`;
