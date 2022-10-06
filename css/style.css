@@ -250,10 +250,13 @@ body {
 	color: red;
 	font-weight: 600;
 	font-size: 16px;
-	text-transform: uppercase;
 	text-align: center;
 	margin-top: 20px;
 }
+.aviso p {
+	text-transform: uppercase;
+}
+
 .aviso.active {
 	display: block;
 }
