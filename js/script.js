@@ -1,20 +1,20 @@
-const input = document.getElementById('search'),
-	buttonInput = document.getElementById('buttonSearch'),
-	sectioInfoProfile = document.querySelector('.section-infos-profile'),
-	modeTheme = document.querySelector('.mode-theme a'),
-	aviso = document.querySelector('.aviso');
+const input = document.getElementById('search')
+const buttonInput = document.getElementById('buttonSearch')
+const sectioInfoProfile = document.querySelector('.section-infos-profile')
+const modeTheme = document.querySelector('.mode-theme a')
+const aviso = document.querySelector('.aviso')
 
 async function userProfile(userName) {
 	try {
-		let rep = await fetch(`https://api.github.com/users/${userName}`);
-		let data = await rep.json();
+		const rep = await fetch(`https://api.github.com/users/${userName}`);
+		const data = await rep.json();
 		if (data.message != 'Not Found') {
 			sectioInfoProfile.style.display = 'block';
 			aviso.classList.remove('active');
 
-			let object = {
+			const object = {
 				avatar: data.avatar_url,
-				name: `${data.name.split(' ')[0] + ' ' + data.name.split(' ')[1]}`,
+				name: `${data.name}`,
 				user: data.login,
 				url: data.html_url,
 				creatData: data.created_at.slice(0, 10),
@@ -28,39 +28,7 @@ async function userProfile(userName) {
 				company: data.company,
 			};
 
-			// maker card info
-			sectioInfoProfile.querySelector('.img-avatar img').src = object.avatar;
-			sectioInfoProfile.querySelector('.name-data .name-at h3').innerHTML = object.name;
-			sectioInfoProfile.querySelector('.name-data .name-at a').setAttribute('href', object.url);
-			sectioInfoProfile.querySelector('.name-data .name-at a').innerHTML = `@${object.user}`;
-			sectioInfoProfile.querySelector(
-				'.name-data .data span'
-			).innerHTML = ` jonied ${object.creatData}`;
-			sectioInfoProfile.querySelector('.statistics-bio .bio p').innerHTML = object.bio;
-			sectioInfoProfile.querySelector('.statistics-profile #repos').innerHTML = object.repPublic;
-			sectioInfoProfile.querySelector('.statistics-profile #followers').innerHTML =
-				object.followers;
-			sectioInfoProfile.querySelector('.statistics-profile #following').innerHTML =
-				object.following;
-			sectioInfoProfile.querySelector('.socias .socias-icons #location').innerHTML =
-				object.location;
-			sectioInfoProfile
-				.querySelector('.socias .socias-icons #blog')
-				.setAttribute('href', object.blog);
-
-			sectioInfoProfile.querySelector('.socias .socias-icons #blog').innerHTML = object.blog;
-			sectioInfoProfile
-				.querySelector('.socias .socias-icons #company')
-				.setAttribute('href', object.company);
-			sectioInfoProfile.querySelector(
-				'.socias .socias-icons #company'
-			).innerHTML = `${object.company}`;
-			sectioInfoProfile
-				.querySelector('.socias .socias-icons #twitter')
-				.setAttribute('href', `https://twitter.com/${object.twitter}`);
-			sectioInfoProfile.querySelector(
-				'.socias .socias-icons #twitter'
-			).innerHTML = `@${object.twitter}`;
+			mountedUserHtml(object)
 		} else {
 			sectioInfoProfile.style.display = 'none';
 			aviso.innerHTML = `Not found ${userName}`;
@@ -69,10 +37,46 @@ async function userProfile(userName) {
 	} catch (error) {}
 }
 
+function mountedUserHtml ( object ){
+		// maker card info
+		sectioInfoProfile.querySelector('.img-avatar img').src = object.avatar;
+		sectioInfoProfile.querySelector('.name-data .name-at h3').innerHTML = object.name;
+		sectioInfoProfile.querySelector('.name-data .name-at a').setAttribute('href', object.url);
+		sectioInfoProfile.querySelector('.name-data .name-at a').innerHTML = `@${object.user}`;
+		sectioInfoProfile.querySelector(
+			'.name-data .data span'
+		).innerHTML = ` jonied ${object.creatData}`;
+		sectioInfoProfile.querySelector('.statistics-bio .bio p').innerHTML = object.bio;
+		sectioInfoProfile.querySelector('.statistics-profile #repos').innerHTML = object.repPublic;
+		sectioInfoProfile.querySelector('.statistics-profile #followers').innerHTML =
+			object.followers;
+		sectioInfoProfile.querySelector('.statistics-profile #following').innerHTML =
+			object.following;
+		sectioInfoProfile.querySelector('.socias .socias-icons #location').innerHTML =
+			object.location;
+		sectioInfoProfile
+			.querySelector('.socias .socias-icons #blog')
+			.setAttribute('href', object.blog);
+
+		sectioInfoProfile.querySelector('.socias .socias-icons #blog').innerHTML = object.blog;
+		sectioInfoProfile
+			.querySelector('.socias .socias-icons #company')
+			.setAttribute('href', object.company);
+		sectioInfoProfile.querySelector(
+			'.socias .socias-icons #company'
+		).innerHTML = `${object.company}`;
+		sectioInfoProfile
+			.querySelector('.socias .socias-icons #twitter')
+			.setAttribute('href', `https://twitter.com/${object.twitter}`);
+		sectioInfoProfile.querySelector(
+			'.socias .socias-icons #twitter'
+		).innerHTML = `@${object.twitter}`;
+}
+
 window.addEventListener('load', () => {
 	userProfile('EnriqueSantos-dev');
-	let theme = window.localStorage.getItem('theme');
-	if (theme == 'light') {
+	const theme = window.localStorage.getItem('theme');
+	if (theme === 'light') {
 		modeTheme.querySelector('span').innerHTML = 'dark';
 		modeTheme.querySelector('i').classList.remove('bx-sun');
 		modeTheme.querySelector('i').classList.add('bxs-moon');
@@ -85,7 +89,7 @@ window.addEventListener('load', () => {
 });
 
 input.addEventListener('keyup', event => {
-	if (input.value != '') {
+	if (input.value !== '') {
 		if (event.key == 'Enter') {
 			userProfile(input.value);
 		}
@@ -93,8 +97,9 @@ input.addEventListener('keyup', event => {
 		sectioInfoProfile.style.display = 'none';
 	}
 });
+
 buttonInput.addEventListener('click', () => {
-	if (input.value != '') {
+	if (input.value !== '') {
 		userProfile(input.value);
 	}
 });
